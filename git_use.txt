@@ -5,6 +5,7 @@ git config --glocal user.email 'email'
 
 git add 'index.html' 'other'
 git commit -m 'describe'
+//git commit -am''  提交已经跟踪且修改的文件
 git push origin master
 
 git mv Index.html index.html
