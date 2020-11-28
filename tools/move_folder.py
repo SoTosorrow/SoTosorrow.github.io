@@ -89,6 +89,9 @@ def copy_to_file(file_dir):
     for file in os.listdir(file_dir):
         if file=='move_folder.py':
             continue
+        #为exe准备
+        if file=='move_folder.exe':
+            continue
         if file==move_to_file:
             continue
         
