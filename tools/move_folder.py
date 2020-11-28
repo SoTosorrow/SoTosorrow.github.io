@@ -63,7 +63,7 @@ if judge=="pass":
         #sys.exit(0)
         move_to = os.path.join(move_from,'target')
     else:
-        #多级目录
+        #mk多级目录
         #os.makedirs(move_from+'\\target\\target2')
         os.mkdir(move_from+'\\target')
         move_to = os.path.join(move_from,'target')
