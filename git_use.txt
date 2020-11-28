@@ -18,3 +18,8 @@ git checkout --filename
 
 git add filelist/
 git add *. 文件类型
+
+查看变化
+git status
+
+git pull origin master // 把本地仓库的变化连接到远程仓库主分支
