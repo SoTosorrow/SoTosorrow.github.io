@@ -1,0 +1,20 @@
+https://npm.taobao.org/mirrors/git-for-windows/
+
+git config --glocal user.name 'ur_name'
+git config --glocal user.email 'email'
+
+git add 'index.html' 'other'
+git commit -m 'describe'
+git push origin master
+
+git mv Index.html index.html
+git push
+
+放弃所有修改
+git checkout .
+
+放弃某文件修改
+git checkout --filename
+
+git add filelist/
+git add *. 文件类型
