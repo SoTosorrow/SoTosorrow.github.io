@@ -35,10 +35,12 @@ pyinstaller -F xxx.py
 dist/exe
 
 打包多文件
-pyinstaller [主文件] -p [其他文件1] -p [其他文件2] 
+pyinstaller -F [主文件] -p [其他文件1] -p [其他文件2] 
 	--hidden-import [自建模块1] 
 	--hidden-import [自建模块2]
 For Example
+-F 打包成一个文件
+-Fw 不出现调试窗口
 pyinstaller [-F] main.py -p mysql.py -p other.py 
 	--hidden-import mysql 
 	--hidden-import other
