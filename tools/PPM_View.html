@@ -1,0 +1,180 @@
+<!--
+    Originally created by
+    John Nicholson, Austin Peay State University
+    -->
+
+<html>
+    <head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>PPM Viewer</title>
+        
+        <style type="text/css">
+            form, div, p {
+                text-align:center;
+            }
+            div {
+                margin-top: 5px;
+                margin-bottom: 5px;
+            }
+            form,div {
+                margin-left:auto;
+                margin-right:auto;
+            }
+            #instruct {
+            }
+            #name {
+                font-size: 1.4em;
+                font-weight: bold;
+            }
+            #errorDiv {
+                text-align:center;
+            }
+            .error {
+                display:inline-block;
+                text-align:left;
+                margin-left:auto;
+                margin-right:auto;
+                font-weight:bold;
+            }
+        </style>
+        <script type="text/javascript">
+            var reloadButton;
+            var canvas;
+            var ctx;
+
+            function showError(msg) {
+                var errorDiv = document.getElementById("errorDiv");
+                errorDiv.innerHTML = '<div class="error">Error: ' + msg + '</div>';
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function processPPM(fileContents) {
+                //在给定矩形内清空一个矩形
+                // left_up:0  left_bottom:0  right_up:width  right_bottom:height
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                
+                /*
+                \s: Space
+                +： 一个或多个
+                ^： 开始，^\s，以空格开始
+                $： 结束，\s$，以空格结束
+                |：或者
+                /g：global， 全局
+                replace() 替换
+                */
+                fileContents = fileContents.replace(/^\s+/, '').replace(/\s+$/, '');
+
+                //  \s匹配任何空白字符 包括\n,\r,\f,\t,\v等
+                //  +匹配前面的子表达式一次或多次
+                // '123    abc     111\ndemo'  ->  ["123", "abc", "111", "demo"]
+                var data = fileContents.split(/\s+/);
+
+                /*
+                P3
+                3 2
+                255
+                255 0 0 0 255 0 0 0 255
+                255 255 0 255 255 255 0 0  
+                */
+                
+                // 如果开头是'P3' 通过检测
+                if (fileContents.substr(0, 2) != 'P3' || data[0] != 'P3') {
+                    showError('File is not a PPM');
+                    return;
+                } 
+                
+                //  standardize
+                var width = data[1];
+                var height = data[2];
+                var maxColors = data[3];
+
+                if (data[3] != 255) {
+                    showError('MaxColors is not 255');
+                    return;
+                }
+
+                // all the pixels with 3 channels + data[0,1,2,3]
+                if (data.length != 3 * width * height + 4) {
+                    showError('Not enough pixel data.<br>'
+                              + 'Found: ' + (data.length  -  4) + '<br>'
+                              + 'Expecting: ' + (3 * width * height) + '<br>'
+                              + 'Based on width = ' + width 
+                              + ' and height = ' + height);
+                    return;
+                }
+
+                //设置或返回表格行的开始和结束标签之间的 HTML
+                errorDiv.innerHTML = '';
+
+                canvas.width=width; 
+                canvas.height=height; 
+
+                var img = ctx.getImageData(0, 0, width, height);
+                var pixels = img.data;
+                //ImageDate.data[]  r,g,b, alpha
+                var imageIndex = 0;
+                for (var i = 4; i < data.length; i += 3) {
+                    pixels[imageIndex++] = data[i]; // r
+                    pixels[imageIndex++] = data[i+1]; // g
+                    pixels[imageIndex++] = data[i+2]; // b
+                    pixels[imageIndex++] = 255; // a
+                }
+                ctx.putImageData(img, 0, 0);
+                reloadButton.disabled = false;
+            }
+
+            function processFiles(files) {
+                if (! reloadButton) {
+                    reloadButton = document.getElementById("reloadBtn");
+                }
+                if (! canvas) {
+                    // width=200  height=100
+                    canvas = document.getElementById("imageCanvas");
+                    //返回一个 CanvasRenderingContext2D 对象，该对象实现了一个画布所使用的大多数方法
+                    //返回一个用于在画布上绘图的环境
+                    ctx = canvas.getContext("2d");
+                }
+
+                reloadButton.disabled = true;
+
+                var file = files[0];
+                var filenameDiv = document.getElementById("filenameDiv");
+                //修改值？
+                filenameDiv.innerHTML = "File: " + file.name;
+                //name,size,type,LastModifiedDate
+                if (file.name.substr(file.name.length-4) != ".ppm") {
+                    showError('file name does not end with ".ppm"');
+                    return
+                }
+
+
+                var r = new FileReader();
+
+                r.onload = function(e) { 
+                    //target 触发该事件的节点，如生成事件的元素、文档或窗口
+                    var contents = e.target.result;
+                    processPPM(contents);
+                } 
+                //以纯文本形式读取文件，读取到的文本保存在result属性中
+                r.readAsText(file);
+
+            }
+        </script>
+    </head>
+    <body>
+        <div id="name">PPM Viewer</div>
+        <div id="instruct">Choose a PPM image to view</div>
+        <form name="fileForm" id="fileForm">
+            <!--
+                for FileReader
+            -->
+            <input type="file" name="filedata" id="filedata" onchange="processFiles(this.files);">
+            <br>
+            <button id="reloadBtn" onclick="processFiles(this.form.filedata.files); return false;">Reload image</button>
+        </form>
+        <div id="filenameDiv">File: image.ppm</div>
+        <div id="errorDiv"></div>
+        <div><canvas id="imageCanvas" width="200" height="100"></canvas></div>
+    
+
+</body>
+</html>
