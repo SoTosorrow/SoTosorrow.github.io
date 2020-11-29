@@ -1,0 +1,34 @@
+#header{
+    background-color: black;
+    color: white;
+    text-align: center;
+    padding: 5px;
+    border-bottom-color: lightcoral;
+}
+#nav{
+    background-color: gray;
+    color: black;
+    text-align: left;
+    height: 1000px;
+    width: 150px;
+    padding: 10px;
+    float: left;
+    line-height:30px;
+}
+#footer{
+    background-color:black;
+    color:white;
+    clear:both;
+    text-align:center;
+    padding:5px;	
+    height: 150px;
+}
+#section{
+    /* float 元素往哪个方向浮动*/
+    float: left;
+    width: 350px;
+    padding: 10px;
+}
+#colour_cornsilk{
+    color:cornsilk;
+}
