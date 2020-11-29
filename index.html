@@ -3,12 +3,87 @@
     <head>
         <meta charset="utf-8">
         <title>Chilly</title>
+        <style>
+            #header{
+                background-color: black;
+                color: white;
+                text-align: center;
+                padding: 5px;
+                border-bottom-color: lightcoral;
+            }
+            #nav{
+                background-color: gray;
+                color: black;
+                text-align: left;
+                height: 1000px;
+                width: 150px;
+                padding: 10px;
+                float: left;
+                line-height:30px;
+            }
+            #footer{
+                background-color:black;
+                color:white;
+                clear:both;
+                text-align:center;
+                padding:5px;	
+                height: 150px;
+            }
+            #section{
+                /* float 元素往哪个方向浮动*/
+                float: left;
+                width: 350px;
+                padding: 10px;
+            }
+            #colour_cornsilk{
+                color:cornsilk;
+            }
+        </style>
+        <script type="text/javascript">
+            function change_text(){
+                document.getElementById("change").innerHTML="你在我就不无聊啦";
+            }
+        </script>
     </head>
     <body>
-        <img src="https://SoTosorrow.github.io\src\img\love_is_in_my_vlood.jpg" width="100" height="142"/>
-        <h3>不会真的有人无聊到写博客吧</h3>
+        <!--
+        <img src="https://SoTosorrow.github.io/src/img/love_is_in_my_vlood.jpg" width="100" height="142"/>
         
+        <img src="D:\git\Rep\SoTosorrow.github.io\src\img\love_is_in_my_blood.jpg" width="800" height="400"/>
+        
+        -->
+        
+        
+        <div id=header>
+            <h3>不会真的有人无聊到写博客吧</h3>
         <p>好吧就是我</p>
-        <a href="https://SoTosorrow.github.io\Pry_into_my_brain.html">Think</a>
+        <a href="https://SoTosorrow.github.io/Pry_into_my_brain.html" id=colour_cornsilk>Think</a>
+        <br>
+        <a href="D:\git\Rep\SoTosorrow.github.io\Pry_into_my_brain.html" id=colour_cornsilk>Think</a>
+        </div>
+        <div id=nav>
+            <a href="">introduce</a>
+            <br>
+            <a href="">tutorial</a>
+            <br>
+            <a href="">novel</a>          
+            <br>
+            <a href="">tools</a>           
+            <br>
+        </div>
+        <div id=section>
+            <h2>
+                2020-11-29
+            </h2>
+            <p>
+                等待赛博朋克2077中
+            </p>
+        </div>
+        <div id=footer>
+            <h3 id=change>无聊搭博客中~~~~~~</h3>
+            <button onclick="change_text()">
+            踩一下
+            </button>
+        </div>
     </body>
 </html>
