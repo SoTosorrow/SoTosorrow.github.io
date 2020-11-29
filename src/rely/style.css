@@ -20,7 +20,7 @@ body{
     width: 300px;   
     height: 100px;   
 }   
-#login h1,h2,a,details{   
+h1,h2,a,details{   
     color: #fff;   
     text-shadow:0 0 10px;   
     letter-spacing: 1px;   
