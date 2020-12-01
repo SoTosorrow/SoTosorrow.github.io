@@ -9,7 +9,7 @@ let food;
 
 function setup() {
   cn = createCanvas(600, 600);
-  cn.touchStarted()
+  cn.touchStarted(touch);
   s = new Snake();
   frameRate(10);
   pickLocation();
@@ -49,7 +49,8 @@ function keyPressed() {
     s.dir(-1, 0);
   }
 }
-function touchStarted(){
+
+function touch(){
   if(s.xspeed==0&&s.yspeed==1)
     s.dir(1,0);
   if(s.xspeed==1&&s.yspeed==0)
