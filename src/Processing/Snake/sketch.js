@@ -8,7 +8,8 @@ let scl = 20;
 let food;
 
 function setup() {
-  createCanvas(600, 600);
+  cn = createCanvas(600, 600);
+  cn.touchStarted()
   s = new Snake();
   frameRate(10);
   pickLocation();
@@ -47,4 +48,14 @@ function keyPressed() {
   } else if (keyCode === LEFT_ARROW) {
     s.dir(-1, 0);
   }
+}
+function touchStarted(){
+  if(s.xspeed==0&&s.yspeed==1)
+    s.dir(1,0);
+  if(s.xspeed==1&&s.yspeed==0)
+    s.dir(0,-1);
+  if(s.xspeed==0&&s.yspeed==-1)
+    s.dir(-1,0);
+  if(s.xspeed==-1&&s.yspeed==0)
+    s.dir(0,1);
 }
