@@ -92,8 +92,7 @@ function setup() {
 }
 
 function draw() {
-
-    background(255);
+    background('#4A374A');
 
     physics.update();
 
