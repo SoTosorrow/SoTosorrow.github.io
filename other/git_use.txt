@@ -8,6 +8,10 @@ git commit -m 'describe'
 //git commit -am''  提交已经跟踪且修改的文件
 git push origin master
 
+// git add -A 提交所有变化
+// git add -u 提交 被修改 和 被删除 的文件
+// git add . 提交 新文件 和 被修改 的文件
+
 git mv Index.html index.html
 git push
 
@@ -22,6 +26,18 @@ git add *. 文件类型
 
 查看变化
 git status
+git branch 查看本地所有分支
+	-r 查看远程所有分支
+	-a 查看本地+远程
+	<name> 新建分支
+	-d <name> 删除本地分支
+	-d -r <name> 删除远程分支,，删除后还需推送到服务器
+	git push origin:<branchname>  //删除后推送至服务器
+	-m <oldname><newname>
+git merge 合并分支
+git clone url
+git checkout master 切换到master分支
+git merge current 将current分支合并到当前分支
 
 git pull origin master // 把本地仓库的变化连接到远程仓库主分支
 
