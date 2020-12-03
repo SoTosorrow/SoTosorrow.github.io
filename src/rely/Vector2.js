@@ -30,7 +30,7 @@ Vector2.prototype={
     multiply:function(f){
         return new Vector2(this.x*f, this.y*f);
     },
-    multiply:function(f){
+    div:function(f){
         var invf = 1/f
         return new Vector2(this.x*invf, this.y*invf);
     },
