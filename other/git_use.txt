@@ -38,6 +38,9 @@ git merge 合并分支
 git clone url
 git checkout master 切换到master分支
 git merge current 将current分支合并到当前分支
+git fetch <> 将某个主机的更新取回本地
+git fetch <><branch> 取回某个分支
+
 
 git pull origin master // 把本地仓库的变化连接到远程仓库主分支
 

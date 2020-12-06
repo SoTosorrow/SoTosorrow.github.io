@@ -37,7 +37,7 @@ function linearEmitTrace(canvas){
         ctx.stroke();
         i++;
         //console.log(i);
-        if(i<150){
+        if(i<100){
             // console.log(i);
             // 10ms后调用函数、此处递归自己以一直运行
             setTimeout(step,10);
