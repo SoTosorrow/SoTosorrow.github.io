@@ -1,49 +1,34 @@
-var VerletPhysics2D = toxi.physics2d.VerletPhysics2D;
-var VerletParticle2D = toxi.physics2d.VerletParticle2D;
-var AttractionBehavior = toxi.physics2d.behaviors.AttractionBehavior;
-var GravityBehavior = toxi.physics2d.behaviors.GravityBehavior;
-var Vec2D = toxi.geom.Vec2D;
-var Rect = toxi.geom.Rect;
 
-/*
+let cn;
+var mis;
+var last_mouseX;
+var last_mouseY;
+
 function setup(){
-    createCanvas(400,300);
+  console.log(0);
+  cn = createCanvas(300,300);
+  cn.touchStarted(doNothing);
+  last_mouseX =0;
+  last_mouseY =0;
 }
+
 function draw(){
-    background(100);
-    rectMode(CENTER);
-    strokeWeight(4);
-    stroke(0,0,255);
-    fill(0,255,0);
-    rect(200,150,150,150);
 
-    noStroke()
-    fill(255,0,0,175)
-    eclipse(150,250,100,75);
-}
-*/
-let cnv;
-let d;
-let g;
-function setup() {
-  cnv = createCanvas(100, 100);
-  cnv.touchStarted(changeGray); // attach listener for
-  // canvas click only
-  d = 10;
-  g = 100;
+  background(200);
+  mis = millis();
+  var distance = Math.sqrt((mouseX-last_mouseX)*(mouseX-last_mouseX)
+    +(mouseY-last_mouseY)*(mouseY-last_mouseY));
+  console.log(distance);
+
+  
 }
 
-function draw() {
-  background(g);
-  ellipse(width / 2, height / 2, d, d);
-}
+function touchStarted(){
+  console.log("touchStarted");
+  last_mouseX = mouseX;
+  last_mouseY = mouseY;
 
-// this function fires with any touch anywhere
-function touchStarted() {
-  d = d + 10;
 }
-
-// this function fires only when cnv is clicked
-function changeGray() {
-  g = random(0, 255);
+function doNothing(){
+  console.log("doNothing");
 }

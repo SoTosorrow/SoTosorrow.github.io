@@ -2,48 +2,26 @@
 <html lang="en">  
 <head>  
  <meta charset="UTF-8">  
- <title>Rigid Particle Simulation</title>   
+ <title>Particle Simulation</title>   
   
  <script type="text/javascript" src="src/rely/Vector2.js"></script>
- <script type="text/javascript" src="src/rely/start.js"></script>
+ <script type="text/javascript" src="src/rely/linearEmitTrace.js"></script>
 
 </head>  
 <body>  
     <!--
     <textarea id="code" rows="20" cols="100"></textarea>
     -->
-    <canvas id="myCanvas" width="200" height="100">
+    <canvas id="myCanvas" width="3000px" height="1000px">
     </canvas>
     <script type="text/javascript">
-        var c=document.getElementById("myCanvas");
-        var cxt=c.getContext("2d");
-        cxt.fillStyle="#111111";
-        cxt.fillRect(0,0,150,75);
         
-        start2("#FFF000");
+
+        linearEmitTrace("myCanvas");
+        l();
 
 
     </script>
-    <script type="text/javascript">
 
-        var position = new Vector2(10,200);
-        var velocity = new Vector(50,-50);
-        var acceleration = new Vector2(0,10);
-        var dt=0.1;
-
-
-        function step(){
-            position = position.add(velocity.multiply(dt));
-            velocity = velocity.add(acceleration.multiply(dt));
-            ctx.strokeStyle = "#000000";
-            ctx.fillStyle = "#FFFFFF";
-            ctx.beginPath();
-            ctx.arc(position.x,position.y,5,0,Math.PI*2,true);
-            ctx.closePath();
-            ctx.fill();
-            ctx.stroke();
-        }
-        start("Canvas",step);
-    </script>
 </body>  
 </html>
