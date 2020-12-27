@@ -1,0 +1,73 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
+<title>自动加载</title>
+<style type="text/css">
+    body{
+        text-align:center;
+        margin: 0 auto;
+    }
+    .main{
+        text-align:center;
+        margin: 0 auto;
+        width:980px;
+    }
+    .mainDiv{
+        width:980px;
+        height:500px;
+        background-color:#ccc;
+        border-bottom:1px solid red;
+    }
+    #scrollup{
+        color:#6EB8FC;
+        text-align: center;
+        text-decoration: none;
+        bottom:65px;
+        right:50px;
+        width:35px;
+        height:35px;
+        border:2px solid #6EB8FC;
+        border-radius:5px;            
+    }
+
+</style>
+
+</head>
+<body>
+<div class="main" id="main" name="main">
+    -----------这里是顶部了-----------
+    <div class="mainDiv"></div>
+    <div class="mainDiv"></div>
+</div>
+
+<a id="scrollup" href="#main" style="position:fixed;z-index: 999;display:none">TOP</a>
+
+<script>
+    window.οnscrοll= function(){
+        //判断到底部的等式: scrollTop+windowHeight=scrollHeight;
+        //变量scrollTop是滚动条滚动时，离顶部的距离
+        var scrollTop = document.documentElement.scrollTop||document.body.scrollTop;
+        //变量windowHeight是可视区的高度
+        var windowHeight = document.documentElement.clientHeight || document.body.clientHeight;
+        //变量scrollHeight是滚动条的总高度
+        var scrollHeight = document.documentElement.scrollHeight||document.body.scrollHeight;
+        //判断滚动条是否到底部
+        if(scrollTop+windowHeight==scrollHeight){
+            //写后台加载数据的函数
+            console.log("距顶部"+scrollTop+"可视区高度"+windowHeight+"滚动条总高度"+scrollHeight);        
+            var div = document.createElement("div");
+            div.setAttribute("class","mainDiv");
+            var main = document.getElementById("main");
+            main.appendChild(div);                
+        }
+        if(scrollTop==0){
+            document.getElementById("scrollup").style.display="none";
+        }else{
+            document.getElementById("scrollup").style.display="block";
+        }
+        
+    }
+</script>
+</body>
+</html>
