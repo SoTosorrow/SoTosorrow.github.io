@@ -95,6 +95,9 @@ class QuadTree{
     }
 
     insert(p){
+        //TODO父节点分裂，数据转移
+        //TODO删除节点
+        //TODO重复顶点为同一坐标问题
         if(!this.boundary.isContain(p)){
             return false;
         }
@@ -152,4 +155,6 @@ class QuadTree{
 
 
 }
+
+
 

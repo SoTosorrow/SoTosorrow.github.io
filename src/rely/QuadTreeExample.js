@@ -1,9 +1,10 @@
 function setup(){
-    createCanvas(400,400);
+    cn = createCanvas(400,400);
+    cn.touchStarted(what);
 
     let boundary = new Rectangle(200,200,200,200);
     number = 0;
-    tree = new QuadTree(boundary,4);
+    tree = new QuadTree(boundary,2);
 
 
     // for(let i=0; i< 300; i++){
@@ -18,12 +19,24 @@ function setup(){
 function draw(){
 
     background(0);
-    //TODO 鼠标单击
-    if(mouseIsPressed){
-        number ++;
-        let p = new Point(mouseX,mouseY);
-        tree.insert(p);
-    }
+
+    // if(mouseIsPressed){
+    //     number ++;
+    //     let p = new Point(mouseX,mouseY);
+    //     tree.insert(p);
+    // }
+
     tree.show();
     console.log(number);
 }
+
+function touchStarted(){
+    number ++;
+    let p = new Point(mouseX,mouseY);
+    //console.log(mouseX,mouseY);
+    tree.insert(p);
+}
+
+function what(){
+    console.log("clicked");
+  }
