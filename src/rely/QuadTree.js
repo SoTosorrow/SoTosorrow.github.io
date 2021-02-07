@@ -1,12 +1,16 @@
-//TODO父节点分裂时的数据转移（是否需要？即分裂的父节点是否还储存数据）
+//2021-2-7：父节点分裂时的数据转移（是否需要？即分裂的父节点是否还储存数据）
 //TODO删除节点
 //TODO重复顶点为同一坐标问题
 //TODOClear
 //TODO碰撞检测
+//TODO 其他的碰撞检测方式
+//TODO 点击太快length计算跟不上？还是什么错误导致click_number和points_length不一致
+//删改查
 class Point{
     constructor(x,y){
         this.x = x;
         this.y = y;
+        //data
 
     }
 }
@@ -43,9 +47,10 @@ class Rectangle{
             point.y <= this.y + this.h);
     }
 
+    //相交
     intersects(range){
         //range 是html文档中的区域，如用户鼠标拖动选中的区域
-        return(range.x -range.w > this.x + this.w ||
+        return !(range.x -range.w > this.x + this.w ||
             range.x +range.w < this.x - this.w ||
             range.y -range.h > this.y + this.h ||
             range.y +range.h < this.y - this.h);    
@@ -68,18 +73,65 @@ class Circle{
     }
 
     intersects(range){
-        
+        let xDist = Math.abs(range.x - this.x);
+        let yDist = Math.abs(range.y - this.y);
+    
+        // radius of the circle
+        let r = this.r;
+    
+        let w = range.w;
+        let h = range.h;
+    
+        let edges = Math.pow((xDist - w), 2) + Math.pow((yDist - h), 2);
+    
+        // no intersection
+        if (xDist > (r + w) || yDist > (r + h))
+          return false;
+    
+        // intersection within the circle
+        if (xDist <= w || yDist <= h)
+          return true;
+    
+        // intersection on the edge of the circle
+        return edges <= this.rSquared;
+      
     }
 }
 
 class QuadTree{
-    constructor(boundary, n){
+    constructor(boundary, capacity){
+        if(!boundary){  //参数判断
+            throw TypeError('boundary need to be define')
+        }
+        if(!(boundary instanceof Rectangle)){   //实例判断
+            throw TypeError('boundary need be the instance of Rect')
+        }
+        if(typeof capacity != 'number'){    //类型判断
+            throw TypeError(`capacity should be a number but is a ${typeof capacity}`);
+        }
+        if (capacity < 1) {
+            throw RangeError('capacity must be greater than 0');
+          }
         //边界
         this.boundary = boundary;
-        this.capacity = n; 
+        this.capacity = capacity; 
         this.points = [];
         this.divided = false;//分裂标志
         this.depth = 1;  // depth from 0 or 1?
+        //maxdepth
+    }
+
+    //点击太快有bug，不知道是不是性能问题
+    get length(){
+        let count = this.points.length;
+        if(this.divided){
+            count += this.northeast.length;
+            count += this.northwest.length;
+            count += this.southeast.length;
+            count += this.southwest.length;
+            
+        }
+        return count;
     }
 
     //当容量到达上限，分裂四叉树
@@ -108,8 +160,11 @@ class QuadTree{
         this.divided = true;
     }
 
+    //增
     insert(p){
-
+        if(this.depth >= 9){
+            return false;
+        }
         if(!this.boundary.isContain(p)){
             return false;
         }
@@ -141,6 +196,13 @@ class QuadTree{
                 this.southeast.insert(p)||this.southwest.insert(p));
     }
 
+    //删
+
+    //改
+
+    //查
+
+    //外部检测
     query(range,found){
         if(!found){
             found = [];
@@ -154,15 +216,18 @@ class QuadTree{
             }
         }
         if(this.divided){
-            this.northeast.query(range.found);
-            this.northwest.query(range.found);
-            this.southeast.query(range.found);
-            this.southwest.query(range.found);
+            this.northeast.query(range,found);
+            this.northwest.query(range,found);
+            this.southeast.query(range,found);
+            this.southwest.query(range,found);
         }
+
+        return found;
     }
+    
 
     show(){
-        stroke(255);
+        stroke(255,255,255);
         strokeWeight(1);
         noFill();
         rectMode(CENTER);
@@ -174,7 +239,7 @@ class QuadTree{
             this.southwest.show();
         }
         for(let p of this.points){
-            strokeWeight(4);
+            strokeWeight(2);
             point(p.x, p.y);
         }
     }
