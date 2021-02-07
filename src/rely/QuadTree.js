@@ -1,3 +1,8 @@
+//TODO父节点分裂时的数据转移（是否需要？即分裂的父节点是否还储存数据）
+//TODO删除节点
+//TODO重复顶点为同一坐标问题
+//TODOClear
+//TODO碰撞检测
 class Point{
     constructor(x,y){
         this.x = x;
@@ -6,6 +11,7 @@ class Point{
     }
 }
 
+//范围检测
 class Rectangle{
     constructor(x,y,w,h){
         this.x = x;
@@ -73,6 +79,7 @@ class QuadTree{
         this.capacity = n; 
         this.points = [];
         this.divided = false;//分裂标志
+        this.depth = 1;  // depth from 0 or 1?
     }
 
     //当容量到达上限，分裂四叉树
@@ -90,27 +97,46 @@ class QuadTree{
         this.southeast = new QuadTree(se, this.capacity);
         let sw = new Rectangle(x - w, y + h, w, h);
         this.southwest = new QuadTree(sw, this.capacity);
+        
+        let next_depth = this.depth +1;
+        this.northeast.depth =next_depth;
+        this.northwest.depth =next_depth;
+        this.southeast.depth =next_depth;
+        this.southwest.depth =next_depth;
+
 
         this.divided = true;
     }
 
     insert(p){
-        //TODO父节点分裂，数据转移
-        //TODO删除节点
-        //TODO重复顶点为同一坐标问题
+
         if(!this.boundary.isContain(p)){
             return false;
         }
 
-        if(this.points.length < this.capacity){
-            this.points.push(p);
-            return true;
-        }
+        // if(this.points.length < this.capacity){
+        //     this.points.push(p);
+        //     return true;
+        // }
+        // if(!this.divided){
+        //     this.subdivide();
+        // }
 
         if(!this.divided){
-            this.subdivide();
+            this.points.push(p);
+            if(this.points.length > this.capacity){
+                this.subdivide();
+                for(let p of this.points){
+                    this.northeast.insert(p);
+                    this.northwest.insert(p);
+                    this.southeast.insert(p);
+                    this.southwest.insert(p);
+                }
+                this.points = [];
+            }
+            return true;            
         }
-    
+
         return (this.northeast.insert(p)||this.northwest.insert(p)||
                 this.southeast.insert(p)||this.southwest.insert(p));
     }

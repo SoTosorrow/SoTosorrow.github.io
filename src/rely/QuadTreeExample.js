@@ -4,7 +4,7 @@ function setup(){
 
     let boundary = new Rectangle(200,200,200,200);
     number = 0;
-    tree = new QuadTree(boundary,2);
+    tree = new QuadTree(boundary,4);
 
 
     // for(let i=0; i< 300; i++){
@@ -27,7 +27,6 @@ function draw(){
     // }
 
     tree.show();
-    console.log(number);
 }
 
 function touchStarted(){
@@ -35,6 +34,8 @@ function touchStarted(){
     let p = new Point(mouseX,mouseY);
     //console.log(mouseX,mouseY);
     tree.insert(p);
+    console.log(number);
+    console.log(tree);
 }
 
 function what(){
